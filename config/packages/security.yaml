@@ -17,6 +17,9 @@ security:
     main:
       lazy: true
       provider: app_user_provider
+      remember_me:
+        secret: "%kernel.secret%" # required
+        lifetime: 604800 # 1 week in seconds
       form_login:
         # "app_login" is the name of the route created previously
         login_path: app_login
@@ -37,7 +40,7 @@ security:
   access_control:
     - { path: ^/login, roles: PUBLIC_ACCESS }
     - { path: ^/$, roles: PUBLIC_ACCESS }
-    - { path: ^/, roles: ROLE_ADMIN }
+    - { path: ^/, roles: ROLE_USER }
 
 when@test:
   security:
