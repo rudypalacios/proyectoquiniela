@@ -1,13 +1,20 @@
-{% extends 'base.unsafe.html.twig' %}
+{% extends 'base.no-nav.html.twig' %}
 
 {% block title %}Reset your password
 {% endblock %}
 
 {% block body %}
-	<h1>Reset your password</h1>
+	<div class="card">
+		<div class="card-body">
+			<h1 class="h2">Reset your password</h1>
 
-	{{ form_start(resetForm) }}
-	{{ form_row(resetForm.plainPassword) }}
-	<button class="btn btn-primary">Reset password</button>
-	{{ form_end(resetForm) }}
+			{{ form_start(resetForm) }}
+			{{ form_row(resetForm.plainPassword) }}
+			<p class="form-text small text-muted">
+				The password must be at least 6 characters long.
+			</p>
+			<button class="btn btn-primary">Reset password</button>
+			{{ form_end(resetForm) }}
+		</div>
+	</div>
 {% endblock %}

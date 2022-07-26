@@ -7,17 +7,27 @@
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="/user">Usuarios</a>
+					<a class="nav-link" href="/user">Users</a>
 				</li>
 			</ul>
 			<span class="navbar-text">
-
-				<a href="/profile" class="link-primary">
-					<i class="bi bi-person-circle"></i>
-					Profile</a>
-				<a href="/logout" class="link-primary">
-					<i class="bi bi-box-arrow-in-right"></i>
-					Logout</a>
+				<div class="btn-group dropstart">
+					<a class="nav-link dropdown-toggle fs-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="bi bi-person-circle"></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="/profile" class="dropdown-item">
+								<i class="bi bi-person-fill"></i>
+								Profile</a>
+						</li>
+						<li>
+							<a href="/logout" class="dropdown-item">
+								<i class="bi bi-box-arrow-in-right"></i>
+								Logout</a>
+						</li>
+					</ul>
+				</div>
 			</span>
 		</div>
 	</div>
