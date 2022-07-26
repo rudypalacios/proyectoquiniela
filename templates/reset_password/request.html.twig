@@ -1,23 +1,45 @@
-{% extends 'base.unsafe.html.twig' %}
+{% extends 'base.no-nav.html.twig' %}
 
-{% block title %}Reset your password
+{% block title %}Request a new password
 {% endblock %}
 
 {% block body %}
-	{% for flash_error in app.flashes('reset_password_error') %}
-		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-	{% endfor %}
-	<h1>Reset your password</h1>
+	<div class="card">
+		<div class="card-body">
 
-	{{ form_start(requestForm) }}
-	{{ form_row(requestForm.email) }}
-	<div>
-		<small>
-			Enter your email address and we will send you a
-			                link to reset your password.
-		</small>
+			{% for flash_error in app.flashes('reset_password_error') %}
+				<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+			{% endfor %}
+
+
+			<h1 class="h2">Forgot your password?</h1>
+			<p>Change your password in three easy steps. This will help you to secure your password!</p>
+			<ol class="list-unstyled">
+				<li>
+					<span class="text-primary text-medium">1.
+					</span>Enter your email address below.</li>
+				<li>
+					<span class="text-primary text-medium">2.
+					</span>Our system will send you a temporary link</li>
+				<li>
+					<span class="text-primary text-medium">3.
+					</span>Use the link to reset your password</li>
+			</ol>
+
+
+			<div class="card mt-4">
+				{{ form_start(requestForm) }}
+				<div class="card-body">
+					{{ form_row(requestForm.email) }}
+					<small class="form-text text-muted">Enter your email address and we will send you a link to reset your password.</small>
+				</div>
+				<div class="card-footer">
+					<button class="btn btn-success mb-2" type="submit">Send password reset email</button>
+					<a class="btn btn-danger mb-2" href={{path('app_login')}}>Back to Login</a>
+				</div>
+				{{ form_end(requestForm) }}
+			</div>
+		</div>
 	</div>
 
-	<button class="btn btn-primary">Send password reset email</button>
-	{{ form_end(requestForm) }}
 {% endblock %}

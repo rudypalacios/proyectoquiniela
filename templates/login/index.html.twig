@@ -1,52 +1,18 @@
-{% extends 'base.unsafe.html.twig' %}
+{% extends 'base.no-nav.html.twig' %}
 
 {% block title %}Login
 {% endblock %}
 
-{% block stylesheets %}
-	<style>
-		html,
-		body {
-			height: 100%;
-		}
-
-		body {
-			display: flex;
-			align-items: center;
-			background-color: #f5f5f5;
-		}
-
-		.form-signin {
-			max-width: 330px;
-			padding: 15px;
-		}
-
-		.form-signin .form-floating:focus-within {
-			z-index: 2;
-		}
-
-		.form-signin input[type="email"] {
-			margin-bottom: -1px;
-			border-bottom-right-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-
-		.form-signin input[type="password"] {
-			margin-bottom: 10px;
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-		}
-	</style>
-{% endblock %}
-
-
 {% block body %}
-	<main class="form-signin w-100 m-auto">
+	<main class="w-50 m-auto">
 		{% if error %}
 			<div class="alert alert-danger" role="alert">
 				{{ error.messageKey|trans(error.messageData, 'security') }}
 			</div>
 		{% endif %}
+		{% for flash_success in app.flashes('success') %}
+			<div class="alert alert-success" role="alert">{{ flash_success }}</div>
+		{% endfor %}
 		<form action="{{ path('app_login') }}" method="post">
 			<h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
 
