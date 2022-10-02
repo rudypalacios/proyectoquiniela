@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -49,6 +51,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean")
      */
     private $active;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Invitation::class, mappedBy="sender")
+     */
+    private $invitationsSender;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Invitation::class, mappedBy="recipient")
+     */
+    private $invitationRecipient;
+
+    /**
+     * @ORM\OneToMany(targetEntity=League::class, mappedBy="owner")
+     */
+    private $leagues;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Bet::class, mappedBy="user")
+     */
+    private $bets;
+
+    public function __construct()
+    {
+        $this->invitationsSender = new ArrayCollection();
+        $this->invitationRecipient = new ArrayCollection();
+        $this->leagues = new ArrayCollection();
+        $this->bets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -178,5 +208,125 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullname(): ?string
     {
         return $this->getName() . ' ' . $this->getLastname();
+    }
+
+    /**
+     * @return Collection<int, Invitation>
+     */
+    public function getInvitationsSender(): Collection
+    {
+        return $this->invitationsSender;
+    }
+
+    public function addInvitationsSender(Invitation $invitationsSender): self
+    {
+        if (!$this->invitationsSender->contains($invitationsSender)) {
+            $this->invitationsSender[] = $invitationsSender;
+            $invitationsSender->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvitationsSender(Invitation $invitationsSender): self
+    {
+        if ($this->invitationsSender->removeElement($invitationsSender)) {
+            // set the owning side to null (unless already changed)
+            if ($invitationsSender->getSender() === $this) {
+                $invitationsSender->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Invitation>
+     */
+    public function getInvitationRecipient(): Collection
+    {
+        return $this->invitationRecipient;
+    }
+
+    public function addInvitationRecipient(Invitation $invitationRecipient): self
+    {
+        if (!$this->invitationRecipient->contains($invitationRecipient)) {
+            $this->invitationRecipient[] = $invitationRecipient;
+            $invitationRecipient->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvitationRecipient(Invitation $invitationRecipient): self
+    {
+        if ($this->invitationRecipient->removeElement($invitationRecipient)) {
+            // set the owning side to null (unless already changed)
+            if ($invitationRecipient->getRecipient() === $this) {
+                $invitationRecipient->setRecipient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, League>
+     */
+    public function getLeagues(): Collection
+    {
+        return $this->leagues;
+    }
+
+    public function addLeague(League $league): self
+    {
+        if (!$this->leagues->contains($league)) {
+            $this->leagues[] = $league;
+            $league->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLeague(League $league): self
+    {
+        if ($this->leagues->removeElement($league)) {
+            // set the owning side to null (unless already changed)
+            if ($league->getOwner() === $this) {
+                $league->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bet>
+     */
+    public function getBets(): Collection
+    {
+        return $this->bets;
+    }
+
+    public function addBet(Bet $bet): self
+    {
+        if (!$this->bets->contains($bet)) {
+            $this->bets[] = $bet;
+            $bet->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBet(Bet $bet): self
+    {
+        if ($this->bets->removeElement($bet)) {
+            // set the owning side to null (unless already changed)
+            if ($bet->getUser() === $this) {
+                $bet->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

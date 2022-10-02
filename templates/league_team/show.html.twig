@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LeagueTeam{% endblock %}
+
+{% block body %}
+    <h1>LeagueTeam</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ league_team.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_league_team_index') }}">back to list</a>
+
+    <a href="{{ path('app_league_team_edit', {'id': league_team.id}) }}">edit</a>
+
+    {{ include('league_team/_delete_form.html.twig') }}
+{% endblock %}

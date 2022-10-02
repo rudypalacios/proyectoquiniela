@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}League index{% endblock %}
+
+{% block body %}
+    <h1>League index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Pool</th>
+                <th>Create_at</th>
+                <th>Updated_at</th>
+                <th>Expiration_date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for league in leagues %}
+            <tr>
+                <td>{{ league.id }}</td>
+                <td>{{ league.name }}</td>
+                <td>{{ league.description }}</td>
+                <td>{{ league.pool }}</td>
+                <td>{{ league.createAt ? league.createAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ league.updatedAt ? league.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ league.expirationDate ? league.expirationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_league_show', {'id': league.id}) }}">show</a>
+                    <a href="{{ path('app_league_edit', {'id': league.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_league_new') }}">Create new</a>
+{% endblock %}
