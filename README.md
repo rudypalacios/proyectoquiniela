@@ -1,1 +1,1 @@
-# proyectoquiniela
+# Proyecto Quiniela
